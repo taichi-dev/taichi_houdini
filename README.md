@@ -30,5 +30,13 @@ Navigate to the installation directory of Houdini, and dive into python37. You n
 
 ```shell
 python3.7.exe get-pip.py
-python3.7.exe -m pip install taichi==0.7.26
+python3.7.exe -m pip install --upgrade taichi
+```
+
+## Instaling this plugin
+### Call Taichi in the Houdini Python shell
+Append this path to PYTHONPATH the evironment variable then, try the following line in your houdini python shell
+```python
+from htoti.fractal import *
+fractal.draw()
 ```
