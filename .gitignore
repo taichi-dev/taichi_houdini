@@ -79,3 +79,4 @@ _build
 *.dot
 *.json
 !docs/**/*.json
+/backup

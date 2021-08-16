@@ -7,7 +7,7 @@ A High-Performance Multi-Material Continuum Physics Engine as a Houdini extensio
 ## Instaling Taichi for Houdini
 
 - Linux
-
+NOTE: it's safer to install using the system's own version of python, and append python path. But you have to make sure the system's python version is consistent with Houdini's.
 ```shell
 cd path_install_houdini/python/bin
 ./python -m pip install --upgrade taichi
