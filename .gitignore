@@ -80,3 +80,4 @@ _build
 *.json
 !docs/**/*.json
 /backup
+/example/backup
