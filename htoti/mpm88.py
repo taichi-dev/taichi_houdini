@@ -16,12 +16,12 @@ class mpm88Class:
         self.gravity = 9.8
         self.bound = 3
         self.E = 400
-
+        # these data are needed for restart
         self.x = ti.Vector.field(2, float, n_particles)
         self.v = ti.Vector.field(2, float, n_particles)
         self.C = ti.Matrix.field(2, 2, float, n_particles)
         self.J = ti.field(float, n_particles)
-
+        # not needed for restart
         self.grid_v = ti.Vector.field(2, float, (n_grid, n_grid))
         self.grid_m = ti.field(float, (n_grid, n_grid))
 
