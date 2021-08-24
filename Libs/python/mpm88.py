@@ -86,6 +86,7 @@ class mpm88Class:
             self.J[i] = 1
 
     def draw(self):
+        ti.init()
         gui = ti.GUI('MPM88')
         self.init()
         while gui.running and not gui.get_event(gui.ESCAPE):
