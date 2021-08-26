@@ -1,0 +1,11 @@
+{
+    "env": [
+        {
+            "HTOTILIB": "DIR_THIS_REPO/Libs"
+        },
+        {
+            "PYTHONPATH": "$HTOTILIB/python"
+        }
+    ],
+    "path": "$HTOTILIB"
+}
