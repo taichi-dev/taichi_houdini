@@ -4,7 +4,13 @@
             "HTOTILIB": "DIR_THIS_REPO/Libs"
         },
         {
-            "PYTHONPATH": "$HTOTILIB/python"
+            "PYTHONPACKSPATH": "PYTHON_PACKAGES_PATH"
+        },
+        {
+            "PYTHONPATH": [
+                "$PYTHONPACKSPATH",
+                "$HTOTILIB/python"
+            ]
         }
     ],
     "path": "$HTOTILIB"

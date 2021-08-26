@@ -2,42 +2,34 @@
 
 A High-Performance Multi-Material Continuum Physics Engine as a Houdini extension.
 
-## Use system's or self-created Python
-it's safer to use the system's own version of python, or a seperate virtual python environment you created. On Windows, this can be achieved by PC Settings->Advanced system settings->System Properties->Environment Variables. On Linux, you can simply append or create PYTHONPATH in the bash config files. Make sure the python version you redirect to is consistent with Houdini's.
-## Instaling Taichi for Houdini
+## Instaling this plugin
+### Using the Houdini "plugin" method (only for 17.5 and higher version)
+Create a folder named packages (if not existed) in your Houdini preferences folder.
+Copy the htoti.json file in this directory into the packages folder.
+Edit the path for the environment variable $htotiLib to the Lib folder in this repo.
+
+### Editing Houdini.env file directly (TODO)
+
+### Share the system or a self-created Python's site packages
+Houdini ships with its own copy of Python, it's safer to use this copy, nonetheless, tedious to re-install every site packages. It's convenient to control the packages in the system Python's or a specific virtural environment and share it with Houdini's Python.
+You can achieve this by simply editing the $PYTHONPACKSPATH in the htoti.json file.
+
+### Instaling Taichi for Houdini
+If you insist to manage the packages in the Python shipped with Houdini manually, follow the steps below.
+
 - Linux
 ```shell
 cd path_install_houdini/python/bin
 ./python -m pip install --upgrade taichi
 ```
 
-While calling pip module, if it appears "libffi.so.6: cannot open shared object file: No such file or directory". Check out this [solution](https://stackoverflow.com/questions/61875869/ubuntu-20-04-upgrade-python-missing-libffi-so-6/63329830#63329830):
-
-```shell
-# Download 19.10 version of the package from here: 
-weget http://mirrors.kernel.org/ubuntu/pool/main/libf/libffi/libffi6_3.2.1-8_amd64.deb
-# then install manually:
-sudo apt install ./libffi6_3.2.1-8_amd64.deb
-```
-
 - Windows
-Navigate to the installation directory of Houdini, and dive into python37. You need to download pip first. Download the [get-pip script](https://bootstrap.pypa.io/get-pip.py) if it doesn't exist in the folder, then
+Navigate to the installation directory of Houdini, and dive into the Python folder (i.e. python37). In the case pip.py doesn't exist, you need to [download pip](https://bootstrap.pypa.io/get-pip.py) first, then open the windows terminal in this folder and type
 
 ```shell
 python3.7.exe get-pip.py
 python3.7.exe -m pip install --upgrade taichi
 ```
-
-## Instaling this plugin
-### Adding it to the Houdini environment
-Houdini 17.5 or higher ("plugin" method)
-Create a folder (if not existed in your Houdini preferences folder) named packages.
-Copy the htoti.json file into the packages folder.
-Edit the path for the environment variable $htotiLib to point to the Lib folder.
-
-Editing Houdini env file directly
-Note: currently we need to import solvers as modules in the python SOP of houdini, so python needs to be able to read the current package locations.
-Append this The Libs directory to PYTHONPATH in the evironment variable in the houdini.env in your Houdini preference folder.
 
 ## Examples
 ### Call Taichi in the Houdini Python shell
