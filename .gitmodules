@@ -1,0 +1,3 @@
+[submodule "Libs/python/taichi_elements"]
+	path = Libs/python/taichi_elements
+	url = git@github.com:taichi-dev/taichi_elements.git
