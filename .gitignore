@@ -81,3 +81,4 @@ _build
 !docs/**/*.json
 /backup
 /Examples/backup
+*.code-workspace
