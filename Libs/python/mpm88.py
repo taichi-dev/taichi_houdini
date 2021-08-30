@@ -86,7 +86,6 @@ class mpm88Class:
             self.J[i] = 1
 
     def draw(self):
-        ti.init()
         gui = ti.GUI('MPM88')
         self.init()
         while gui.running and not gui.get_event(gui.ESCAPE):
@@ -95,3 +94,9 @@ class mpm88Class:
             gui.clear(0x112F41)
             gui.circles(self.x.to_numpy(), radius=1.5, color=0x068587)
             gui.show()
+
+
+if __name__ == '__main__':
+    ti.init()
+    m = mpm88Class(8192, 128, 2e-4)
+    m.draw()

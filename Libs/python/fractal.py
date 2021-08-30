@@ -23,9 +23,14 @@ class fractalClass:
             self.pixels[i, j] = 1 - iterations * 0.02
 
     def draw(self):
-        ti.init()
         gui = ti.GUI("Julia Set", res=(self.res * 2, self.res))
         for i in range(1000000):
             self.paint(i * 0.03)
             gui.set_image(self.pixels)
             gui.show()
+
+
+if __name__ == '__main__':
+    ti.init()
+    f = fractalClass(320)
+    f.draw()
