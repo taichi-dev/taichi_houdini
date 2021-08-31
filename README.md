@@ -29,7 +29,7 @@ make
 sudo make altinstall
 # assume PATH_TO_VENV to put the virtual environment and the name is htoti_env
 cd PATH_TO_VENV
-python3.7 venv htoti_env
+python3.7 -m venv htoti_env
 source htoti_env/bin/activate
 # now you have activated this env
 python3.7 -m pip install --upgrade taichi
