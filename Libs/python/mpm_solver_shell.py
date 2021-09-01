@@ -5,12 +5,13 @@ from taichi_elements.engine.mpm_solver import MPMSolver
 
 @ti.data_oriented
 class MPMSolverShell:
-    def __init__(self, res, dim):
+    def __init__(self, res, dim, unbounded):
         assert dim == 2 or dim == 3, "dim error"
         self.dim = dim
         res_array = dim * [res]
-        self.solver = MPMSolver(res_array)
+        self.solver = MPMSolver(res_array, unbounded=unbounded)
 
+    # TODO use the built in dynamic copy func, avoid making your own whell
     @ti.func
     def write_channel_data(self, i, channel: ti.template(),
                            data: ti.template()):
