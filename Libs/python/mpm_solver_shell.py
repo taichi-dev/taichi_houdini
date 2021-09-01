@@ -100,11 +100,9 @@ class MPMSolverShell:
         self.solver.n_particles[None] += new_pnum
 
     def detailed_export_to_ext_array(self):
-
         p_num = self.solver.n_particles[None]
         print("resize ext arr")
         P = np.zeros((p_num, self.dim))
-        print("P shape inside ", np.shape(P))
         v = np.zeros((p_num, self.dim))
         F = np.zeros((p_num, self.dim, self.dim))
         C = np.zeros((p_num, self.dim, self.dim))
