@@ -5,13 +5,16 @@ from taichi_elements.engine.mpm_solver import MPMSolver
 
 @ti.data_oriented
 class MPMSolverShell:
-    def __init__(self, res, dim, unbounded):
-        assert dim == 2 or dim == 3, "dim error"
+    def __init__(self, res, dim, unbounded=True):
+        assert (dim == 2 or dim == 3), "dim error"
         self.dim = dim
         res_array = dim * [res]
-        self.solver = MPMSolver(res_array, unbounded=unbounded)
+        self.solver = MPMSolver(res_array,
+                                unbounded=unbounded,
+                                use_voxelizer=False)
 
     # TODO use the built in dynamic copy func, avoid making your own whell
+    # refer to the particle_info()
     @ti.func
     def write_channel_data(self, i, channel: ti.template(),
                            data: ti.template()):
@@ -136,8 +139,8 @@ class MPMSolverShell:
 if __name__ == "__main__":
     print("test MPM solver shell")
     ti.init()
-    ms2 = MPMSolverShell(128, 2)
-    ms3 = MPMSolverShell(128, 3)
+    ms2 = MPMSolverShell(128, 2, True)
+    ms3 = MPMSolverShell(128, 3, True)
     P = np.zeros((160, 2))
     v = np.zeros((160, 2))
     F = np.zeros((160, 2, 2))
@@ -151,5 +154,3 @@ if __name__ == "__main__":
     H = np.zeros(160)
     ms2.detailed_append_from_ext_array(P, v, F, Jp, C, material, density, E,
                                        nu, f_angle, H)
-    ms2.detailed_export_to_ext_array(P, v, F, Jp, C, material, density, E, nu,
-                                     f_angle, H)
