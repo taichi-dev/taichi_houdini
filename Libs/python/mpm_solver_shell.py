@@ -9,9 +9,7 @@ class MPMSolverShell:
         assert (dim == 2 or dim == 3), "dim error"
         self.dim = dim
         res_array = dim * [res]
-        self.solver = MPMSolver(res_array,
-                                unbounded=unbounded,
-                                use_voxelizer=False)
+        self.solver = MPMSolver(res_array, unbounded=unbounded)
 
     # TODO use the built in dynamic copy func, avoid making your own whell
     # refer to the particle_info()

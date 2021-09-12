@@ -9,7 +9,8 @@
         {
             "PYTHONPATH": [
                 "$PYTHONPACKSPATH",
-                "$HTOTILIB/python"
+                "$HTOTILIB/python",
+                "$HTOTILIB/python/taichi_elements"
             ]
         }
     ],
