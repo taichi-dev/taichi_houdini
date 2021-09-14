@@ -50,6 +50,8 @@ class moveClass:
     def append_from_ext_array(self, P):
         new_pnum = np.size(P) // 3
         print('append channels')
+        print(self.n_particles[None])
+        print(new_pnum)
         self.write_vector_channel(new_pnum, x, P)
         self.n_particles[None] += new_pnum
 
