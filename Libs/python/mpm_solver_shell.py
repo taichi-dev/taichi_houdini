@@ -5,11 +5,13 @@ from taichi_elements.engine.mpm_solver import MPMSolver
 
 @ti.data_oriented
 class MPMSolverShell:
-    def __init__(self, res, dim, unbounded=True):
+    def __init__(self, res, dim, max_num_particles, unbounded=True):
         assert (dim == 2 or dim == 3), "dim error"
         self.dim = dim
         res_array = dim * [res]
-        self.solver = MPMSolver(res_array, unbounded=unbounded)
+        self.solver = MPMSolver(res_array,
+                                unbounded=unbounded,
+                                max_num_particles=max_num_particles)
 
     # TODO use the built in dynamic copy func, avoid making your own whell
     # refer to the particle_info()
