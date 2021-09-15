@@ -5,11 +5,12 @@ from taichi_elements.engine.mpm_solver import MPMSolver
 
 @ti.data_oriented
 class MPMSolverShell:
-    def __init__(self, res, dim, max_num_particles, unbounded=True):
+    def __init__(self, res, dim, max_num_particles, size=1, unbounded=True):
         assert (dim == 2 or dim == 3), "dim error"
         self.dim = dim
         res_array = dim * [res]
         self.solver = MPMSolver(res_array,
+                                size=size,
                                 unbounded=unbounded,
                                 max_num_particles=max_num_particles)
 
