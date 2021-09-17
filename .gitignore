@@ -83,3 +83,4 @@ _build
 /Examples/backup
 *.code-workspace
 Libs/otls/backup
+*.bgeo.sc
