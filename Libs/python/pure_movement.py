@@ -1,7 +1,7 @@
 import taichi as ti
 import numpy as np
 
-# ti.init()
+ti.init()
 
 max_num_particles = 2**30
 chunk_size = 2**23
@@ -63,6 +63,8 @@ class moveClass:
         self.read_vector_channel(x, P)
         return P
 
+
+p = moveClass(1e-3, 0)
 
 # if __name__ == "__main__":
 #     print("test move class")
