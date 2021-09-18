@@ -2,17 +2,20 @@ import taichi as ti
 import numpy as np
 from taichi_elements.engine.mpm_solver import MPMSolver
 
+# NOTE how do we control gpu or cpu
+ti.init()
+
 
 @ti.data_oriented
 class MPMSolverShell:
-    def __init__(self, res, dim, max_num_particles, size=1, unbounded=True):
+    def __init__(self, res, dim):
         assert (dim == 2 or dim == 3), "dim error"
         self.dim = dim
         res_array = dim * [res]
         self.solver = MPMSolver(res_array,
-                                size=size,
-                                unbounded=unbounded,
-                                max_num_particles=max_num_particles)
+                                size=1,
+                                unbounded=True,
+                                use_voxelizer=False)
 
     # TODO use the built in dynamic copy func, avoid making your own whell
     # refer to the particle_info()
@@ -137,9 +140,13 @@ class MPMSolverShell:
         return P, v, F, Jp, C, material, density, E, nu, f_angle, H
 
 
+# NOTE currently the size and resolution are hard coded
+# TODO have to support editing these parameters in the element-back-end
+shell2d = MPMSolverShell(128, 2)
+shell3d = MPMSolverShell(128, 3)
+
 if __name__ == "__main__":
     print("test MPM solver shell")
-    ti.init()
     ms2 = MPMSolverShell(128, 2, True)
     ms3 = MPMSolverShell(128, 3, True)
     P = np.zeros((160, 2))
