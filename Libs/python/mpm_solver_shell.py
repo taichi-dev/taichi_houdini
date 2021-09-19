@@ -16,6 +16,7 @@ class MPMSolverShell:
                                 size=1,
                                 unbounded=True,
                                 use_voxelizer=False)
+        self.frame = 0
 
     # TODO use the built in dynamic copy func, avoid making your own whell
     # refer to the particle_info()
