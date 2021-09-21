@@ -140,6 +140,35 @@ class MPMSolverShell:
 
         return P, v, F, Jp, C, material, density, E, nu, f_angle, H
 
+    def set_solver_pars(self, pars, analytical_walls, analytical_spheres):
+        use_gpu = pars['use_gpu']
+        dx = pars['dx']
+        dt = pars['dt']
+        res = pars['res']
+        dim = pars['dim']
+        g = pars['g']
+        if (self.dim == 2):
+            g = [g[0], g[1]]
+        unbounded = pars['unbounded']
+        size = pars['size']
+
+        self.default_dt = dt
+        self.solver.set_gravity(g)
+        self.solver.clear_grid_postprocess()
+        # add bbox
+        if not unbounded:
+            self.solver.add_bounding_box(unbounded)
+        # add walls
+        for wall in analytical_walls:
+            print(wall)
+            self.solver.add_surface_collider(wall["point"], wall["normal"],
+                                             wall["type"], wall["f"])
+        # add spheres
+        for sp in analytical_spheres:
+            print(sp)
+            # TODO wait for the backend to support fractional friction for sphere
+            self.solver.add_sphere_collider(sp["center"], sp["r"], sp["type"])
+
 
 # NOTE currently the size and resolution are hard coded
 # TODO have to support editing these parameters in the element-back-end
