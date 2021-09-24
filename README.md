@@ -5,51 +5,27 @@ This repository is for embedding the existing [taichi-element](https://github.co
 TODO teaser_gif fight the alien
 
 ## Installing this plug-in
-This plug-in only supports **the Python3 Houdini with version >=17.5**
+This plug-in only supports **the Python3 versioned Houdini >=17.5**
 
 ### Houdini "plug-in" method
+
+Houdini will automatically create a preference folder upon your 1st luanch. On Linux, this folder is $Home/houdini_version_number. On windows, this folder is $USER/Documents/houdini_version_number. We will dive into this folder and install a json config file to let Houdini where to search the plug-in.
 
 - Create a folder named packages (if not existed) in your Houdini preferences folder.
 - Copy the htoti.json file in this directory into the packages folder.
 - Edit the variable $htotiLib to the `Libs` folder of this repo.
 
-### Share the site packages of the system's Python or a self-created virtual environment
-Houdini ships with its own copy of Python, it's safer to use this copy, nonetheless, tedious to re-install every site packages. It's convenient to control the packages in the system Python's or a specific virtural environment and share it with Houdini's Python. You can achieve this by simply editing the $PYTHONPACKSPATH in the htoti.json file. The current version of Python with Houdini 18.5 is 3.7.4, hence we recommend installing the same version and use that to create a virtual environment, i.e.
-
-- Linux and Python3.7.4
-```shell
-orcurl https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tar.xz
-tar -xf Python-3.7.4.tar.xz
-cd Python-3.7.4
-# if you encountered the openssl problem while installing packages via pip
-# then, you need to modify the setup dist file and re-compile from source
-# please refer to: https://stackoverflow.com/a/5939170
-make distclean
-# then repeat below
-./configure --enable-optimization
-make
-# install this python alongside the system default
-sudo make altinstall
-# assume PATH_TO_VENV to put the virtual environment and the name is htoti_env
-cd PATH_TO_VENV
-python3.7 -m venv htoti_env
-source htoti_env/bin/activate
-# now you have activated this env
-python3.7 -m pip install --upgrade taichi
-# the site package will be installedNonetheless in the folder "htoti_env/lib/python3.7/site-packages"
-# Now set PYTHONPATH the directory containing this virtual environment's site packages, and you are good to go.
-```
-
-### Installing under the Houdini directory
-If you insist to manage the packages in the figsPython shipped with Houdini manually, follow the steps below.
+### Installing packages  under the Houdini directory
+If you would like to manage the packages in the Python shipped with Houdini, follow the steps below.
 
 - Linux
 ```shell
 cd path_install_houdini/python/bin
-./python -m pip install --upgrade taichi
+python3 -m pip install --upgrade taichi
 ```
+On Linux, you may encounter problem when importing packages in Houdini's Python because your the system Python's version is different, consider reading this solution TODO_ref_another_md.
 
-- that Windows
+- Windows
 Navigate to the installation directory of Houdini, and dive into the Python folder (i.e. python37). In the case pip.py doesn't exist, you need to [download pip](https://bootstrap.pypa.io/get-pip.py) first, then open the windows terminal in this folder and type
 
 ```shell
@@ -121,38 +97,7 @@ A quick tip from the Houdini side is to save your cooked results and do the post
 
 TODO gif demo_earth
 
-## Known issues and TODO list
-
-Known issues:
+## Known issues
 
 - **Editing a connected MPMSolver node will not update the hda.** If you would like to contribute to **this hda,** always remember to sync your update to an unlocked, isolated htotiMPMSolver node after testing well, then lock and save it.
 - **Reseting the simulation, or modifying the SOP network prior to the MPM solver.** This operation will dramatically slow down the following solving, try to save all the modifications then, restart Houdini.
-
-
-
-ti-element-back-end:
-
-- CUDA has bug in Houdini
-- Support modifying the parameters: 1. 2. 3. after having created the MPM solver
-- SDF/volume based collision
-- Slippery spherical collision
-- Analytical box collision
-- Moving collision
-- Per-particle physical properties: 1. 2. 3.
-
-
-
-Houdini-front-end:
-
-- SDF/volume based collision
-- Slippery spherical collision
-- Analytical box collision
-- Moving collision
-- Visualization flag for collision objects
-- Sub-frame update for the emitor and/or collision object
-- Results Dumper
-
-
-
-
-
