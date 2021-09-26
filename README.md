@@ -2,7 +2,9 @@
 
 This repository is for embedding the existing [taichi-element](https://github.com/taichi-dev/taichi_elements), a High-Performance Multi-Material Continuum Physics Engine, as a Houdini extension. So that you can benefit from both flexibility for preprocessing via Houdini and the high performance via the ti engine.
 
-<a href="Examples/mpm_element_castle.hipnc"><img src="Misc/castle1.gif" height="180px"><img src="Misc/castle2.gif" height="180px"></a>
+<a href="Examples/mpm_element_castle.hipnc"><img src="Misc/castle1.gif" height="240px"><img src="Misc/castle2.gif" height="240px"></a>
+
+<a href="Examples/mpm_element_ti_logo.hipnc"><img src="Misc/logo.gif" height="480px"></a>
 
 ## Installing this plug-in
 This plug-in only supports **the Python3 versioned Houdini >=17.5**
@@ -47,7 +49,7 @@ If you open the [fractal.py](Libs/python/fractal.py), you will find that the onl
 
 You can see how to replicate this in Houdini by [Examples/fractal.hipnc](Examples/fractal.hipnc), although it's super slow and you might have noticed that taichi inits every frame. This is because Houdini losses the handler of the `fractalClass` every frame it re-executes the solver SOP, and we have to re-import or init() the taichi to avoid stack overflow. We discuss the solution in the later section.
 
-<a href="https://github.com/yuanming-hu/taichi_houdini/blob/DOC/Examples/fractal.hipnc"><img src="Misc/fractal.gif" height="240px"></a>
+<a href="https://github.com/yuanming-hu/taichi_houdini/blob/DOC/Examples/fractal.hipnc"><img src="Misc/fractal.gif" height="320px"></a>
 
 ## Introduction to the MPM plug-in
 
@@ -70,38 +72,35 @@ All combined, it's working. Nonetheless, it is worthy of mentioning that this im
 Overall, the above procedure defines the simplest form of **any htoti solvers**: 1. a solver is written in taichi, packed as a ti.data_oriented class with proper parameter settings and APIs; 2. an SOP Solver node containing the proper python scripts to use the ti solver, re-obtain the data, and advance the simulation; 3. handling the input of emitors or other geometry SOP nodes to define the scene change before the solving, and 4. the external material-makers the solver to create necessary attributes for the simulation.
 
 ### HToTi-MPM asset
+In our HToTi-MPM asset, we solve the ti.init() problem by making MPM_solver_shell objects inside the module. When Python imports this module for the 1st time, these objects are materialized and kept in cache while Houdini is running. Hence, for every frame, we only need to re-fill the particle information, saving time for compiling and allocating memory.
 
-### Making the materials, selecting parameters in the solver
+We also move the emitors and colliders to be 2 external assets and connect them to the inputs of the solver SOP. Every frame, the solver SOP will read the updated emitors and colliders and refresh the corresponding settings. This procedure decouples the geometry editing and the solver's advancing and utilizes Houdini's flexibility. 
+
+### Selecting parameters in the solver
+
+The parameter interface of the solver lets you adjust global parameters such as dimension, resolution, dx, and gravity. It also lets you select the initial particles.
+
+<a href="Examples/mpm_element_3d.hipnc"><img src="Misc/par_interface.png" height="200px"><img src="Misc/demo3d.gif" height="200px"></a>
+
+### Making the materials, Editing the emitors in Houdini, FREELY
 
 Material-Maker is an independent, packed SOP node, whose sole purpose is to create point attributes for all the points of the incoming node's geometry. We have made 4 selectable materials: 1. elastic, 2. water, 3. sand and, 4. snow.
 
-The parameter interface of the solver lets you adjust global parameters such as dimension, resolution, dx and gravity. It also lets you select the initial particles.
+The emitors are going to the 0th input of the solver. You can enjoy the 100% flexibility brought by Houdini and just merge the particles before feeding into the solver's 0th input. In the below demo, we can easily control the timing for different emitters by [the parameter expressions](https://www.sidefx.com/docs/houdini/network/expressions.html) and the Houdini Built-in Switch nodes.
 
-<a href="Examples/mpm_element_3d.hipnc"><img src="Misc/demo2d.gif" height="180px"><img src="Misc/demo3d.gif" height="180px"></a>
+<a href="Examples/mpm_element_2d.hipnc"><img src="Misc/emitors_input.png" height="200px"><img src="Misc/demo2d.gif" height="200px"></a>
 
-TODO screenshot of the parameters
-
-### Editing the emitors in Houdini, FREELY
-
-The emitors are going to the 0th input of the solver. The initial state of the geometry can be selected from the solver's menu directly. You can enjoy the 100% flexibility brought by Houdini and just merge the particles before feeding into the solver's 0th input. In the below demo, we can easily control the timing for different emittors by [the parameter expressions](https://www.sidefx.com/docs/houdini/network/expressions.html) and the Houdini Built-in Switch nodes.
-
-<a href="Examples/mpm_element_2d.hipnc"><img src="Misc/demo2d.gif" height="180px"><img src="Misc/demo3d.gif" height="180px"></a>
-
-TODO screenshot of the emittors and switches
 ### Adding analytical collisions
 
 The analytical collision goes to the 1st input of the solver. We have made the analytical planes(walls) and the analytical spheres. We are looking forward to contribution concerning box, tets, moving analytical collisions, and generalized SDF-based collisions.
 
-<a href="Examples/mpm_element_sphere.hipnc"><img src="Misc/sphere.gif" height="320px"></a>
+<a href="Examples/mpm_element_sphere.hipnc"><img src="Misc/collider_input.png" height="200px"><img src="Misc/sphere.gif" height="200px"></a>
 
-TODO add screenshoots for analytical collision setup
-
-<a href="Examples/mpm_element_ti_logo.hipnc"><img src="Misc/logo.gif" height="320px"></a>
 ### Saving the cooked results via the ROP_geometry node
 
 A quick tip from the Houdini side is to save your cooked results and do the post-processing later. We show below an example of the acid rain balls crashing at our planet. Do protect the environment!
 
-<a href="Examples/mpm_element_earth.hipnc"><img src="Misc/earth.gif" height="320px"></a>
+<a href="Examples/mpm_element_earth.hipnc"><img src="Misc/earth.gif" height="480px"></a>
 
 ## Known issues
 
