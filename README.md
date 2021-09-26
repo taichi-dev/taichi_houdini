@@ -2,16 +2,14 @@
 
 This repository is for embedding the existing [taichi-element](https://github.com/taichi-dev/taichi_elements), a High-Performance Multi-Material Continuum Physics Engine, as a Houdini extension. So that you can benefit from the both flexibility for preprocessing via Houdini and the high performance via the ti engine.
 
-TODO teaser_gif fight the alien
-
 ## Installing this plug-in
 This plug-in only supports **the Python3 versioned Houdini >=17.5**
 
 ### Houdini "plug-in" method
 
-Houdini will automatically create a preference folder upon your 1st luanch. On Linux, this folder is $Home/houdini_version_number. On windows, this folder is $USER/Documents/houdini_version_number. We will dive into this folder and install a json config file to let Houdini where to search the plug-in.
+Houdini will automatically create a preference folder upon your 1st luanch. On Linux, this folder is `$Home/houdini_version_number`. On windows, this folder is `$USER/Documents/houdini_version_number`. We will dive into this folder and install a json configure file to let Houdini where to search the plug-in.
 
-- Create a folder named packages (if not existed) in your Houdini preferences folder.
+- Create a folder named `packages` (if not existed) in your Houdini preferences folder.
 - Copy the htoti.json file in this directory into the packages folder.
 - Edit the variable $htotiLib to the `Libs` folder of this repo.
 
@@ -23,7 +21,7 @@ If you would like to manage the packages in the Python shipped with Houdini, fol
 cd path_install_houdini/python/bin
 python3 -m pip install --upgrade taichi
 ```
-On Linux, you may encounter problem when importing packages in Houdini's Python because your the system Python's version is different, consider reading this solution TODO_ref_another_md.
+On Linux, you may encounter problem when importing packages in Houdini's Python because your the system Python's version is different, consider [creating a virtual environment](Misc/virtual_python_environment_linux.md).
 
 - Windows
 Navigate to the installation directory of Houdini, and dive into the Python folder (i.e. python37). In the case pip.py doesn't exist, you need to [download pip](https://bootstrap.pypa.io/get-pip.py) first, then open the windows terminal in this folder and type
@@ -47,7 +45,7 @@ If you open the `fractal.py`, you will find that the only thing we did is to pac
 
 You can see how to replicate this in Houdini by `Examples/fractal.hipnc`, although it's super slow and you might have noticed that taichi inits every frame. This is because Houdini losses the handler of the `fractalClass` every frame it re-executes the solver SOP, and we have to re-import or init() the taichi to avoid stack overflow. We discuss the solution in the later section.
 
-TODO gif of fractal
+<a href="https://github.com/taichi-dev/taichi/blob/master/examples/simulation/mpm128.py"><img src="https://github.com/yuanming-hu/taichi_houdini/blob/DOC/Misc/fractal.gif" height="320px"></a>
 
 ## Introduction to the MPM plug-in
 
