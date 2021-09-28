@@ -3,7 +3,7 @@ Houdini ships with its own copy of Python, it's safer to use this copy, nonethel
 
 - Linux and Python3.7.4
 ```shell
-curl https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tar.xz
+curl https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tar.xz --output Python-3.7.4.tar.xz
 tar -xf Python-3.7.4.tar.xz
 cd Python-3.7.4
 # if you encountered the openssl problem while installing packages via pip
@@ -11,8 +11,9 @@ cd Python-3.7.4
 # please refer to: https://stackoverflow.com/a/5939170
 make distclean
 # then repeat below
-./configure --enable-optimization
-make
+./configure --enable-optimizations
+make -j
+# if you see ssl fatal error while make, refer to https://stackoverflow.com/questions/43131708/fatal-error-openssl-rsa-h-no-such-file-or-directory/43132137 for the solution
 # install this python alongside the system default
 sudo make altinstall
 # assume PATH_TO_VENV to put the virtual environment and you are naming it as htoti_env
@@ -21,7 +22,7 @@ python3.7 -m venv htoti_env
 source htoti_env/bin/activate
 # now you have activated this env
 python3.7 -m pip install --upgrade taichi
-# the site package will be installedNonetheless in the folder "htoti_env/lib/python3.7/site-packages"
+# the site package will be installed in the folder "htoti_env/lib/python3.7/site-packages"
 # Now set PYTHONPATH variable in the installation json file that you copied earlier to houdini_preference_folder/packages/, and good to go.
 ```
 
