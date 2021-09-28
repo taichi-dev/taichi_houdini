@@ -2,12 +2,17 @@
 
 This repository is for embedding the existing [taichi-element](https://github.com/taichi-dev/taichi_elements), a High-Performance Multi-Material Continuum Physics Engine, as a Houdini extension. So that you can benefit from both flexibility for preprocessing via Houdini and the high performance via the ti engine.
 
-<a href="Examples/mpm_element_castle.hipnc"><img src="Misc/castle1.gif" height="240px"><img src="Misc/castle2.gif" height="240px"></a>
+<a href="Examples/mpm_element_castle.hipnc"><img src="Misc/castle1.gif" height="480px"><img src="Misc/castle2.gif" height="480px"></a>
 
 <a href="Examples/mpm_element_ti_logo.hipnc"><img src="Misc/logo.gif" height="480px"></a>
 
 ## Installing this plug-in
-This plug-in only supports **the Python3 versioned Houdini >=17.5**
+This plug-in only supports **the Python3 versioned Houdini >=17.5**. First, make sure to init the submodule to keep the same track of the (possible) customized edition of ti-element.
+
+```shell
+git submodule update --init
+```
+
 
 ### Houdini "plug-in" method
 
