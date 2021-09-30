@@ -19,16 +19,17 @@ git submodule update --init
 Houdini will automatically create a preference folder upon your 1st launch. On Linux, this folder is `$Home/houdini_version_number`. On windows, this folder is `$USER/Documents/houdini_version_number`. We will dive into this folder and install a JSON configuration file.
 
 - Create a folder named `packages` (if not existed) in your Houdini preferences folder.
-- Copy the htoti.json file in this directory into the packages folder.
-- Edit the variable $htotiLib to the `Libs` folder of this repo.
+- Copy the `htoti.json` file in this directory into the packages folder.
+- Modifiy `DIR_THIS_REPO` to the path of this repo.
+
 
 ### Installing packages  under the Houdini directory
-If you would like to manage the packages in the Python shipped with Houdini, follow the steps below.
+If you would like to manage the packages in the Python shipped with Houdini (i.e. python37), follow the steps below.
 
 - Linux
 ```shell
 cd path_install_houdini/python/bin
-python3 -m pip install --upgrade taichi
+./python3.7 -m pip install --user --upgrade taichi
 ```
 On Linux, you may encounter problems when importing packages in Houdini's Python because your the system Python's version is different, consider [creating a virtual environment](Misc/virtual_python_environment_linux.md).
 
