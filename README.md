@@ -1,4 +1,4 @@
-# Houdini To Taichi(htoti) Element
+# Houdini To Taichi(htoti) Element (Experimental)
 
 This repository is for embedding the existing [taichi-element](https://github.com/taichi-dev/taichi_elements), a High-Performance Multi-Material Continuum Physics Engine, as a Houdini extension. So that you can benefit from both flexibility for preprocessing via Houdini and the high performance via the ti engine.
 
@@ -10,7 +10,7 @@ This repository is for embedding the existing [taichi-element](https://github.co
 This plug-in only supports **the Python3 versioned Houdini >=17.5**. First, make sure to init the submodule to keep the same track of the (possible) customized edition of ti-element.
 
 ```shell
-git submodule update --init
+git clone git@github.com:taichi-dev/taichi_houdini.git --recursive
 ```
 
 
